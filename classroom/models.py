@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 # Create your models here.
 
 
@@ -34,7 +34,7 @@ class Student(Timestamp):
 		return self.full_name
 
 class Course(Timestamp):
-	number=models.PositiveIntegerField()
+	number=models.PositiveIntegerField(unique=True)
 	name=models.CharField(max_length=20)
 
 	teacher=models.ManyToManyField(Teacher, related_name="courses")

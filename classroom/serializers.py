@@ -16,6 +16,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
 	student_name=UserSerializer(read_only=True,many=True)
+	# course_details=CourseSerializer(read_only=True,many=True)
 	class Meta:
 		model=Student
 		fields='__all__'
@@ -38,3 +39,17 @@ class AssessmentSerializer(serializers.ModelSerializer):
 		model=Assessment
 		fields='__all__'
 
+
+class StudentDetailSerializer(serializers.ModelSerializer):
+	courses=serializers.StringRelatedField(many=True)
+	class Meta:
+		model=Student
+		fields='__all__'
+		depth=1
+
+class TeacherDetailSerializer(serializers.ModelSerializer):
+	courses=serializers.StringRelatedField(many=True)
+	class Meta:
+		model=Teacher
+		fields='__all__'
+		depth=1
