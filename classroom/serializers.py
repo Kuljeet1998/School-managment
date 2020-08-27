@@ -9,7 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
 		fields=['id','first_name','last_name']
 
 class TeacherSerializer(serializers.ModelSerializer):
-	# user=serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=True,required=False)
 	teacher_name=UserSerializer(read_only=True,many=True)
 	class Meta:
 		model=Teacher
