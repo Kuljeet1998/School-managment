@@ -12,7 +12,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 	teacher_name=UserSerializer(read_only=True,many=True)
 	class Meta:
 		model=Teacher
-		fields=['staff_no','user','teacher_name']
+		fields='__all__'
 
 class StudentSerializer(serializers.ModelSerializer):
 	student_name=UserSerializer(read_only=True,many=True)
