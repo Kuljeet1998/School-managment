@@ -19,6 +19,6 @@ router.register(r'users', UserViewSet)
 router.register(r'teachers', TeacherViewSet)
 router.register(r'student', StudentViewSet)
 router.register(r'course', CourseViewSet)
-router.register(r'student_course', StudentCourseViewSet)
 router.register(r'assessment', AssessmentViewSet)
+router.register(r'aboutme', MeAPIViewSet, basename='AboutMe')
 urlpatterns=router.urls
