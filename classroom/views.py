@@ -3,6 +3,8 @@ from .models import *
 from .serializers import *
 from rest_framework import generics, viewsets
 from rest_framework import filters
+from django.http import HttpResponse
+from rest_framework.response import Response
 # Create your views here.
 
 #Implementing Generics View
@@ -39,6 +41,24 @@ class AssessmentDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserViewSet(viewsets.ModelViewSet):
 	queryset=User.objects.all()
 	serializer_class=UserSerializer
+
+	def create(self,request):
+		# import pdb;
+		# pdb.set_trace()
+		serializer=UserSerializer(data=request.data)
+		if serializer.is_valid():
+			email=request.POST.get('email')
+			try:
+				user = User.objects.get(email=email)
+			except User.DoesNotExist:
+				user = None
+
+			if user is not None:
+				return HttpResponse("Email already exists")
+			else:
+				serializer.save()
+				return Response(serializer.data,status=201)
+		return Response(serializer.errors,status=204)
 
 class TeacherViewSet(viewsets.ModelViewSet):
 	queryset=Teacher.objects.all()
