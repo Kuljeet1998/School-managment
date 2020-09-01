@@ -9,21 +9,21 @@ class UserSerializer(serializers.ModelSerializer):
 		fields=['id','username','first_name','last_name','email']
 
 class TeacherSerializer(serializers.ModelSerializer):
-	teacher_name=UserSerializer(read_only=True,many=True)
+	# teacher_name=UserSerializer(read_only=True,many=True)
 	class Meta:
 		model=Teacher
 		fields='__all__'
 
 class StudentSerializer(serializers.ModelSerializer):
-	student_name=UserSerializer(read_only=True,many=True)
-	# course_details=CourseSerializer(read_only=True,many=True)
+	# student_name=UserSerializer(read_only=True,many=True)
 	class Meta:
 		model=Student
 		fields='__all__'
+		# read_only_fields = ['roll_no','user']
 
 class CourseSerializer(serializers.ModelSerializer):
-	teacher_name=TeacherSerializer(read_only=True,many=True,source='teacher')
-	student_name=StudentSerializer(read_only=True,many=True,source='members')
+	teacher_details=TeacherSerializer(read_only=True,many=True,source='teacher')
+	student_details=StudentSerializer(read_only=True,many=True,source='members')
 	class Meta:
 		model=Course
 		fields='__all__'
@@ -41,15 +41,17 @@ class AssessmentSerializer(serializers.ModelSerializer):
 
 
 class StudentDetailSerializer(serializers.ModelSerializer):
-	courses=serializers.StringRelatedField(many=True)
+	courses=serializers.StringRelatedField(many=True,read_only=True)
+	user=UserSerializer(read_only=True)
 	class Meta:
 		model=Student
 		fields='__all__'
-		depth=1
+		# depth=1
 
 class TeacherDetailSerializer(serializers.ModelSerializer):
-	courses=serializers.StringRelatedField(many=True)
+	courses=serializers.StringRelatedField(many=True,read_only=True)
+	user=UserSerializer(read_only=True)
 	class Meta:
 		model=Teacher
 		fields='__all__'
-		depth=1
+		# depth=1

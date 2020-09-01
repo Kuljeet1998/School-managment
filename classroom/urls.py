@@ -2,6 +2,7 @@ from django.urls import path
 from .views import *
 from classroom import views
 from rest_framework import routers
+from django.conf.urls import url
 #Calling generic Views
 # urlpatterns=[
 # 	path('user/',views.UserList.as_view()),
@@ -20,5 +21,7 @@ router.register(r'teachers', TeacherViewSet)
 router.register(r'student', StudentViewSet)
 router.register(r'course', CourseViewSet)
 router.register(r'assessment', AssessmentViewSet)
-router.register(r'aboutme', MeAPIViewSet, basename='AboutMe')
-urlpatterns=router.urls
+urlpatterns=[
+	path('me/',MeAPI.as_view()),
+]
+urlpatterns+=router.urls
